@@ -23,21 +23,24 @@ public class AplicacaoConsole {
         int somaReprovadosPorPresenca = 0;
 
         for (int i = 0;i<5;i++){
-             int matricula = Integer.parseInt(JOptionPane.showInputDialog("Digite a matricula do aluno."));
-             double nota01 = Double.parseDouble(JOptionPane.showInputDialog("Digite a 1° nota."));
-             double nota02 = Double.parseDouble(JOptionPane.showInputDialog("Digite a 2° nota."));
-             double nota03 = Double.parseDouble(JOptionPane.showInputDialog("Digite a 3° nota."));
-             String frequenciaPresenca = JOptionPane.showInputDialog("Digite a frequencia. [Alta, Media, Minima");
+            try {
+                int matricula = Integer.parseInt(JOptionPane.showInputDialog("Digite a matricula do aluno."));
+                double nota01 = Double.parseDouble(JOptionPane.showInputDialog("Digite a 1° nota."));
+                double nota02 = Double.parseDouble(JOptionPane.showInputDialog("Digite a 2° nota."));
+                double nota03 = Double.parseDouble(JOptionPane.showInputDialog("Digite a 3° nota."));
+                String frequenciaPresenca = JOptionPane.showInputDialog("Digite a frequencia. [Alta, Media, Minima");
+                alunos.add(new Aluno(matricula, nota01, nota02, nota03, frequenciaPresenca));
+            }catch (Exception e){
+                System.out.println("Por gentileza digitar as notas com ponto flutuante");
+            }
 
-
-            alunos.add(new Aluno(matricula, nota01, nota02, nota03, frequenciaPresenca));
         }
 
         for (Aluno al : alunos){
-            System.out.println(al.getMatricula());
+            System.out.println("Matricula do Aluno: "+ al.getMatricula());
             double somaTodos = al.getNota01()+al.getNota02()+al.getNota03();
             System.out.println("Media Final: "+ (somaTodos/3));
-            if (!Objects.equals(al.getFrequenciaPresenca(), "Minima")){
+            if (al.getFrequenciaPresenca() != "Minima"){
                 Function<Double,String> status = n -> somaTodos >=7 ? "Aprovado":"Reprovado";
             }else{
                 System.out.println("Reprovado por Presenca");
